@@ -1,0 +1,19 @@
+<p *ngIf="data && data.message">
+  {{data.message}}
+</p>
+<p *ngIf="data && !data.message">
+  <a href="{{data.websiteUrl}}" target="_blank" title="Click to open facility website">
+    <img src="{{data.photoUrl}}" alt="Facility Pic" *ngIf="data.photoUrl" />
+  </a>
+  <br *ngIf="data.photoUrl" /> {{data.name}}
+  <br/> {{data.address.line1}} {{data.address.line2}}
+  <br *ngIf="data.address.line2" /> {{data.address.line3}}
+  <br *ngIf="data.address.line3" /> {{data.address.city}}, {{data.address.stateCode}} {{data.address.zipCode}}
+  <br/> ({{data.phone.areaCode}}) - {{data.phone.exchange}} {{data.phone.number}}
+  <span *ngIf="data.phone.extension"> x {{data.phone.extension}}</span>
+</p>
+<p *ngIf="!data">
+  No data is enclosed.
+</p>
+<button mat-raised-button (click)="onApply()" *ngIf="!data.message">Apply Data</button>
+<button mat-raised-button mat-dialog-close autofocus>Close</button>

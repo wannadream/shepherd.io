@@ -1,0 +1,24 @@
+p {
+  text-align: center;
+}
+
+h5 {
+  margin: 0;
+}
+
+.search-input {
+  width: 50%;
+}
+
+.news-card {
+  width: 85%;
+}
+
+.news-card h3 {
+  margin: 0;
+}
+
+.foot-note {
+  padding-top: 5px;
+  font-size: 0.8em;
+}

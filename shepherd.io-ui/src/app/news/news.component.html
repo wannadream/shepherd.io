@@ -1,0 +1,39 @@
+<p>
+  <mat-form-field class="search-input">
+    <mat-placeholder><mat-icon>search</mat-icon> <i>Search keywords in titles on the fly</i></mat-placeholder>
+    <input matInput [formControl]="searchInput" />
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <button mat-mini-fab type="button" color="accent" title="Refresh" *ngIf="helper.isLoggedIn && helper.currentUser.isAdmin"
+    (click)="onUpdate()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <mat-grid-list [cols]="cols | async" rowHeight="275px">
+    <mat-grid-tile *ngFor="let n of news" [@fadeInOut]="n">
+      <mat-card class="news-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h5>{{n?.title}}</h5>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="news">
+            <tbody>
+              <tr [ngSwitch]="n?.source">
+                <td [class]="descriptionClass | async" *ngSwitchCase="'Google News'" [innerHTML]="n?.description"></td>
+                <td [class]="descriptionClass | async" *ngSwitchCase="'National Public Radio'" [innerHTML]="n?.content"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <td class="foot-note">
+                <i>{{n?.pubDate | date}}, Data Source:
+                  <strong>{{n?.source}}</strong>
+                </i>
+              </td>
+            </tfoot>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</p>

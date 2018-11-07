@@ -1,0 +1,39 @@
+.app-title {
+  cursor: pointer;
+}
+
+.app-version {
+  font-size: 0.5em;
+}
+
+.app-top-menu {
+  padding-left: 20px;
+}
+
+.app-top-menu ul {
+  list-style: none;
+}
+
+.app-top-menu li {
+  display: inline-block;
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+}
+
+.app-top-menu li:hover {
+  text-decoration: underline;
+}
+
+.toolbar-spacer {
+  width: 100%;
+}
+
+.app-top-user {
+  font-size: 1em;
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  font-size: 1em;
+}

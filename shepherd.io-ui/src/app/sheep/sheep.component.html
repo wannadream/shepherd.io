@@ -1,0 +1,34 @@
+<p>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="alienNo">
+      <mat-header-cell *matHeaderCellDef> Alien No. </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.alienNo}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.firstName}} {{row.middleName}} {{row.lastName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="nationality">
+      <mat-header-cell *matHeaderCellDef> Nationality </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.nationality}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dateOfCustody">
+        <mat-header-cell *matHeaderCellDef> Date of Custody </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.dateOfCustody | date}} </mat-cell>
+      </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <a mat-raised-button color="primary" [routerLink]="[row._id]" *ngIf="!(isOnMobile | async)">Details</a>
+        <a color="primary" [routerLink]="[row._id]" *ngIf="isOnMobile | async"><mat-icon>edit</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5,10,20]" [showFirstLastButtons]="true">
+  </mat-paginator>
+</p>
+<p style="padding-left:10px;">
+  <a mat-raised-button color="primary" [routerLink]="['new']"><mat-icon>people</mat-icon> New</a>
+</p>

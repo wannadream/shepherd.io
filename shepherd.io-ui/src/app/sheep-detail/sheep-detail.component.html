@@ -1,0 +1,158 @@
+<form [formGroup]="sheepForm" (ngSubmit)="onSubmit()" novalidate>
+  <table class="sheep-table">
+    <tr>
+      <td>
+        <mat-form-field>
+          <input matInput placeholder="Alien No." formControlName="alienNo" />
+          <mat-error *ngIf="alienNo.hasError('required')">
+            Alien No. is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName" />
+          <mat-error *ngIf="firstName.hasError('required')">
+            First Name is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Middle Name" formControlName="middleName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="lastName" />
+          <mat-error *ngIf="lastName.hasError('required')">
+            Last Name is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Nationality" formControlName="nationality">
+            <mat-option *ngFor="let country of countries" [value]="country[0]">
+              {{country[1]}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="nationality.hasError('required')">
+            Nationality is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field style="width:360px;">
+          <input matInput placeholder="District of Court" formControlName="districtOfCourt" />
+          <mat-hint>e.g. FOR THE NORTHERN DISTRICT OF ALABAMA</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Division" formControlName="division" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Detention Facility Unit" formControlName="detentionFacilityUnit" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Detention Facility Name" formControlName="detentionFacilityName" />
+        </mat-form-field>
+        <mat-form-field style="width:360px;">
+          <input matInput placeholder="Detention Facility Address" formControlName="detentionFacilityAddress" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="City, State, and Zip" formControlName="detentionFacilityCityStateZip" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateOfCustodyPicker" placeholder="Date of Custody" formControlName="dateOfCustody" />
+          <mat-error *ngIf="dateOfCustody.hasError('required')">
+            Date of Custody is
+            <strong>required</strong>
+          </mat-error>
+          <mat-datepicker-toggle matSuffix [for]="dateOfCustodyPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfCustodyPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateOfFinalOrderOfRemovalPicker" placeholder="Date of Final Order of Removal" formControlName="dateOfFinalOrderOfRemoval"
+          />
+          <mat-datepicker-toggle matSuffix [for]="dateOfFinalOrderOfRemovalPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfFinalOrderOfRemovalPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Start of Requesting Travel Doc" formControlName="iceReqTravelDocStartDate" />
+          <mat-hint>When ICE started the request</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="End of Requesting Travel Doc" formControlName="iceReqTravelDocEndDate" />
+          <mat-hint>Describe the end, e.g. year</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="District Court City &amp; State" formControlName="districtCourtCityAndState" />
+          <mat-hint>e.g. Birmingham, AL</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="habeasFilingDatePicker" placeholder="Habeas Filing Date" formControlName="habeasFilingDate"
+          />
+          <mat-hint>Usually today's date</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="habeasFilingDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #habeasFilingDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" placeholder="Total Months in Custody" formControlName="totalMonthsInCustody" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="ICE Field Office Name" formControlName="iceFieldOfficeName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="ICE Field Office Director's Name" formControlName="iceFieldOfficeDirectorName" />
+        </mat-form-field>
+        <mat-form-field class="full-line-break">
+          <textarea matInput rows="1" placeholder="State how you cannot afford a lawyer" formControlName="statementOfCantAffordLawyer"></textarea>
+        </mat-form-field>
+        <mat-form-field class="full-line-break">
+          <textarea matInput rows="1" placeholder="State how you are unable to understand and practice laws" formControlName="statementOfUnableToUnderstandLaws"></textarea>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <br/>
+        <br/>
+        <mat-form-field *ngIf="showDocGenerate">
+          <mat-select placeholder="Doc to Generate" #docToGenerate>
+            <mat-option *ngFor="let doc of documents" [value]="doc.value">
+              {{doc.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span *ngIf="!(isOnMobile | async)">
+          <button mat-raised-button type="button" color="accent" title="Generate selected document" (click)="onGenerate()" *ngIf="showDocGenerate">
+            <mat-icon>insert_drive_file</mat-icon> Generate
+          </button>
+          &nbsp;
+          <button mat-raised-button type="button" color="accent" title="Search for detainee's location" (click)="onViewIceData()" *ngIf="showViewIceData">
+            <mat-icon>search</mat-icon> Detention Facility
+          </button>
+          &nbsp;
+          <button mat-raised-button type="submit" title="Save current data" color="primary">
+              <mat-icon>save</mat-icon> Save
+          </button>
+          &nbsp;
+          <button mat-raised-button type="button" title="Go back" color="primary" (click)="onBack()">
+              <mat-icon>arrow_back</mat-icon> Back
+          </button>
+        </span>
+        <div style="clear: both;" *ngIf="isOnMobile | async">
+          <button mat-mini-fab type="button" color="accent" title="Generate selected document" (click)="onGenerate()" *ngIf="showDocGenerate">
+            <mat-icon>insert_drive_file</mat-icon>
+          </button>
+          &nbsp;
+          <button mat-mini-fab type="button" color="accent" title="Search for detainee's location" (click)="onViewIceData()" *ngIf="showViewIceData">
+            <mat-icon>search</mat-icon>
+          </button>
+          &nbsp;
+          <button mat-mini-fab type="submit" title="Save current data" color="primary">
+            <mat-icon>save</mat-icon>
+          </button>
+          &nbsp;
+          <button mat-mini-fab type="button" title="Go back" color="primary" (click)="onBack()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>

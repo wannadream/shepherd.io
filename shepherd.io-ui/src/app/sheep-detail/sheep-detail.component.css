@@ -1,0 +1,11 @@
+.sheep-table {
+    margin: 10px;
+}
+.sheep-table .mat-form-field {
+    padding-right: 10px;
+}
+
+.full-line-break {
+    width: 100%;
+    clear: both;
+}

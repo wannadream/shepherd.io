@@ -1,0 +1,23 @@
+h2 {
+  text-align: center;
+}
+
+h4,
+p {
+  padding: 0 20px;
+}
+
+ul.style1 {
+  padding: 0 40px;
+  list-style: disc;
+}
+
+ul.style2 {
+  padding: 0 40px;
+  list-style: lower-roman;
+}
+
+ul li,
+p {
+  line-height: 1.3em;
+}

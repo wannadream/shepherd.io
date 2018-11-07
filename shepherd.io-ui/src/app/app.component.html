@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <span>
+    <strong class="app-title" [routerLink]="['/']">{{helper.appStatus.appName}}</strong>
+    <i class="app-version">v {{helper.appStatus.appVersion}}</i>
+  </span>
+  <span class="app-top-menu">
+    <span id="non-xs-menu" *ngIf="!(isOnMobile | async)">
+      <ul>
+        <li [routerLink]="['truth']">truth</li>
+        <li [routerLink]="['news']">news</li>
+        <li [routerLink]="['immigration-statistics']">statistics</li>
+        <li [routerLink]="['sheep']" *ngIf="helper.isLoggedIn">sheep</li>
+        <li [routerLink]="['login']" *ngIf="!helper.isLoggedIn">login</li>
+      </ul>
+    </span>
+  </span>
+  <span class="toolbar-spacer"></span>
+  <span id="xs-menu" *ngIf="isOnMobile | async">
+    <button mat-icon-button [matMenuTriggerFor]="nav" title="Navigation">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #nav="matMenu">
+      <a mat-menu-item [routerLink]="['truth']">truth</a>
+      <a mat-menu-item [routerLink]="['news']">news</a>
+      <a mat-menu-item [routerLink]="['immigration-statistics']">statistics</a>
+      <a mat-menu-item [routerLink]="['sheep']" *ngIf="helper.isLoggedIn">sheep</a>
+      <a mat-menu-item [routerLink]="['login']" *ngIf="!helper.isLoggedIn">login</a>
+    </mat-menu>
+  </span>
+  <span class="app-top-user" *ngIf="helper.isLoggedIn">
+    <span *ngIf="!(isOnMobile | async)">
+      {{helper.currentUser.name}}
+    </span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" title="User">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onChangePassword()">
+        <span>CHANGE PASSWORD</span>
+      </button>
+      <button mat-menu-item (click)="onLogOut()">
+        <span>LOG OUT</span>
+      </button>
+    </mat-menu>
+  </span>
+</mat-toolbar>
+<router-outlet></router-outlet>
+<footer>&copy;{{helper.currentYear}} shepherd.io, All Rights Reserved.</footer>

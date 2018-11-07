@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*
+    @angular/material/prebuilt-themes
+
+    Available pre-built themes:
+
+    deeppurple-amber.css
+    indigo-pink.css
+    pink-bluegrey.css
+    purple-green.css
+    @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+*/
+/* @import '~material-design-icons/iconfont/material-icons.css'; */
+
+/* roboto-regular - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/roboto-v18-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local('Roboto'), local('Roboto-Regular'), url('/assets/fonts/roboto-v18-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/assets/fonts/roboto-v18-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('/assets/fonts/roboto-v18-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('/assets/fonts/roboto-v18-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('/assets/fonts/roboto-v18-latin-regular.svg#Roboto') format('svg');
+  /* Legacy iOS */
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f7f7f7;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.news {
+  text-align: left;
+}
+
+.news .description ol {
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.news .description ol li {
+  padding-bottom: 5px;
+}
+
+.news .description ol li:nth-child(n+3) {
+  display: none;
+}
+
+.news .description a {
+  font-weight: normal;
+  color: palevioletred;
+}
+
+.news .description p {
+  margin: 0;
+  max-height: 85px;
+  overflow-y: hidden;
+}
+
+.news .description img {
+  float: left;
+  max-width: 150px;
+  max-height: 100px;
+  margin-right: 10px;
+}
+
+.news .description font {
+  font-weight: bold;
+}
+
+.news .description a:nth-child(2) {
+  font-style: italic;
+}
+
+.news .description-xs {
+  font-size: 0.9em;
+}
+
+.news .description-xs ol {
+  margin: 0;
+  padding-left: 10px;
+  list-style: none;
+}
+
+.news .description-xs img {
+  float: left;
+  max-width: 75px;
+  max-height: 50px;
+  margin-right: 5px;
+}
+
+.news .description-xs a {
+  font-weight: normal;
+  color: palevioletred;
+}
+
+.news .description-xs ol li:nth-child(n+2) {
+  display: none;
+}
+
+.news .description-xs ol a:last-child {
+  display: none;
+}
