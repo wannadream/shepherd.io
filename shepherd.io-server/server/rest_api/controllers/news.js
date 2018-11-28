@@ -41,7 +41,7 @@ module.exports.refreshNewsFromFeeds = function (req, res) {
             const post_options = {
                 host: 'news.google.com',
                 port: '443',
-                path: '/news/rss/search/section/q/immigration/immigration?hl=en&gl=US&ned=us',
+                path: '/_/rss/topics/CAAqBwgKMJej0wEwpcY1?hl=en-US&gl=US&ceid=US%3Aen',
                 method: 'GET',
                 timeout: 10000
             };
@@ -66,14 +66,24 @@ module.exports.refreshNewsFromFeeds = function (req, res) {
                             for (let index = 0; index < values.length; index++) {
                                 const element = values[index];
                                 if (!element) {
-                                    addPromised.push(News.create({
+                                    const item = items[index];
+                                    const newNews = {
                                         source: 'Google News',
-                                        title: items[index].title[0],
-                                        link: items[index].link[0],
-                                        pubDate: items[index].pubDate[0],
-                                        description: items[index].description[0],
-                                        category: items[index].category[0]
-                                    }));
+                                        title: item.title[0],
+                                        link: item.link[0],
+                                        pubDate: item.pubDate[0],
+                                        description: item.description[0],
+                                        // category: item.category[0]
+                                    };
+                                    if (item['media:content'] && item['media:content'][0]) {
+                                        newNews.mediaContent = {
+                                            url: item['media:content'][0].$.url,
+                                            medium: item['media:content'][0].$.medium,
+                                            width: item['media:content'][0].$.width,
+                                            height: item['media:content'][0].$.height
+                                        };
+                                    }
+                                    addPromised.push(News.create(newNews));
                                 }
                             }
                             Promise.all(addPromised)
@@ -119,13 +129,14 @@ module.exports.refreshNewsFromFeeds = function (req, res) {
                             for (let index = 0; index < values.length; index++) {
                                 const element = values[index];
                                 if (!element) {
+                                    const item = items[index];
                                     addPromised.push(News.create({
                                         source: 'National Public Radio',
-                                        title: items[index].title[0],
-                                        link: items[index].link[0],
-                                        pubDate: items[index].pubDate[0],
-                                        description: items[index].description[0],
-                                        content: items[index]['content:encoded'][0]
+                                        title: item.title[0],
+                                        link: item.link[0],
+                                        pubDate: item.pubDate[0],
+                                        description: item.description[0],
+                                        content: item['content:encoded'][0]
                                     }));
                                 }
                             }

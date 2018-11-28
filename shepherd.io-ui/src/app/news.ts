@@ -5,4 +5,11 @@ export interface News {
     category: string;
     pubDate: Date;
     description: string;
+    content: string;
+    mediaContent: {
+        url: string,
+        medium: string,
+        width: string,
+        height: string
+    };
 }

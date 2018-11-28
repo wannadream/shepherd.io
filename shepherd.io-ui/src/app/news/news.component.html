@@ -20,7 +20,10 @@
           <table class="news">
             <tbody>
               <tr [ngSwitch]="n?.source">
-                <td [class]="descriptionClass | async" *ngSwitchCase="'Google News'" [innerHTML]="n?.description"></td>
+                <td [class]="descriptionClass | async" *ngSwitchCase="'Google News'">
+                  <img *ngIf="n?.mediaContent && n?.mediaContent.medium === 'image'" [src]="n?.mediaContent.url" style="margin-right:30px;"/>
+                  <span [innerHTML]="n?.description"></span>
+                </td>
                 <td [class]="descriptionClass | async" *ngSwitchCase="'National Public Radio'" [innerHTML]="n?.content"></td>
               </tr>
             </tbody>

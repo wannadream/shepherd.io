@@ -19,7 +19,13 @@ const newsSchema = new mongoose.Schema({
         required: true
     },
     description: String,
-    content: String
+    content: String,
+    mediaContent: {
+        url: String,
+        medium: String,
+        width: String,
+        height: String
+    }
 });
 
 module.exports.News = mongoose.model('News', newsSchema);
