@@ -7,6 +7,10 @@
 const app = require('../app');
 const debug = require('debug')('shepherd.io:server');
 const http = require('http');
+const jobs = require('../app-jobs');
+
+// Start scheduled jobs
+jobs.start();
 
 /**
  * Get port from environment and store in Express.

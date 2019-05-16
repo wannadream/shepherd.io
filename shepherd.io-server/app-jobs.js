@@ -1,39 +1,9 @@
-const News = require('../../models/news').News;
+const cron = require("node-cron");
+const News = require('./server/models/news').News;
 const parseString = require('xml2js').parseString;
 const https = require('https');
-const utils = require('../../../lib/utils');
 
-module.exports.newsList = function (req, res) {
-    News.find({}).limit(50).sort('-pubDate').exec(function (err, results, stats) {
-        if (err) {
-            utils.sendJsonResponse(res, 400, err);
-        } else {
-            utils.sendJsonResponse(res, 200, results);
-        }
-    });
-};
-
-module.exports.newsListSearchByTitle = function (req, res) {
-    if (req.params && req.params.keywords) {
-        const keyWords = req.params.keywords.replace(' ', '|').replace('\\', '\\\\');
-        const regex = new RegExp(keyWords, 'i');
-        News.find({
-            title: regex
-        }).sort('-pubDate').exec(function (err, results, stats) {
-            if (err) {
-                utils.sendJsonResponse(res, 400, err);
-            } else {
-                utils.sendJsonResponse(res, 200, results);
-            }
-        });
-    } else {
-        utils.sendJsonResponse(res, 400, {
-            "message": "No key word."
-        });
-    }
-};
-
-module.exports.refreshNewsFromFeeds = function (req, res) {
+const refreshNewsFromFeeds = function (req, res) {
     try {
 
         const googleNewsPromise = new Promise((resolve, reject) => {
@@ -154,18 +124,19 @@ module.exports.refreshNewsFromFeeds = function (req, res) {
         });
 
         Promise.all([googleNewsPromise, nationaPublicRadioNewsPromise]).then(data => {
-            utils.sendJsonResponse(res, 200, data);
+            console.log('Syncing news feeds done.');
         }).catch(e => {
             console.error(e);
-            utils.sendJsonResponse(res, 400, {
-                "message": e.message
-            });
         });
 
     } catch (e) {
         console.error(e.message);
-        utils.sendJsonResponse(res, 400, {
-            "message": "cannot parse news feed."
-        });
     }
+};
+
+module.exports.start = function() {
+  cron.schedule("*/5 * * * *", function() {
+    console.log("Syncing news feeds...");
+    refreshNewsFromFeeds();
+  });
 };
