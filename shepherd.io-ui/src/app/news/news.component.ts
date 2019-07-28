@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ObservableMedia } from '@angular/flex-layout';
-import { MatDialog } from '@angular/material';
+import { MediaObserver } from '@angular/flex-layout';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, map, startWith } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  map,
+  startWith
+} from 'rxjs/operators';
 import { News } from '../news';
 import { NewsService } from '../news.service';
 import { HelperService } from '../helper.service';
@@ -17,23 +29,22 @@ import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.compone
   animations: [
     trigger('fadeInOut', [
       state('in', style({ opacity: 100 })),
-      transition('* => void', [
-        animate(300, style({ opacity: 0 }))
-      ])
+      transition('* => void', [animate(300, style({ opacity: 0 }))])
     ])
   ]
 })
 export class NewsComponent implements OnInit {
-
   news: Array<News> = [];
   searchInput: FormControl = new FormControl('');
   cols: Observable<number>;
   descriptionClass: Observable<string>;
 
-  constructor(public helper: HelperService,
+  constructor(
+    public helper: HelperService,
     private _newsSvc: NewsService,
     private _dialog: MatDialog,
-    private _observableMedia: ObservableMedia) { }
+    private _observableMedia: MediaObserver
+  ) {}
 
   ngOnInit() {
     const colMap = new Map([
@@ -58,7 +69,7 @@ export class NewsComponent implements OnInit {
       }
     });
     this.cols = this._observableMedia.asObservable().pipe(
-      map(change => colMap.get(change.mqAlias)),
+      map(change => colMap.get(change[0].mqAlias)),
       startWith(startCol)
     );
 
@@ -69,37 +80,46 @@ export class NewsComponent implements OnInit {
       }
     });
     this.descriptionClass = this._observableMedia.asObservable().pipe(
-      map(change => classMap.get(change.mqAlias)),
+      map(change => classMap.get(change[0].mqAlias)),
       startWith(startClass)
     );
 
-    this._newsSvc.getNews().subscribe(data => this.news = this.news.concat(data));
-    this.searchInput.valueChanges.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(keywords => this._newsSvc.searchNews(keywords))
-    ).subscribe(data => {
-      this.news = [];
-      this.news = data;
-    });
+    this._newsSvc
+      .getNews()
+      .subscribe(data => (this.news = this.news.concat(data)));
+    this.searchInput.valueChanges
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        switchMap(keywords => this._newsSvc.searchNews(keywords))
+      )
+      .subscribe(data => {
+        this.news = [];
+        this.news = data;
+      });
   }
 
   onUpdate() {
-    const dialogRef = this._dialog.open(LoadingDialogComponent, { disableClose: true });
-    this._newsSvc.updateNews().subscribe(sources => {
-      for (const source of sources) {
-        for (const n of source) {
-          this.news.splice(0, 0, n);
+    const dialogRef = this._dialog.open(LoadingDialogComponent, {
+      disableClose: true
+    });
+    this._newsSvc.updateNews().subscribe(
+      sources => {
+        for (const source of sources) {
+          for (const n of source) {
+            this.news.splice(0, 0, n);
+          }
         }
-      }
-      dialogRef.close();
-    }, error => dialogRef.close());
+        dialogRef.close();
+      },
+      error => dialogRef.close()
+    );
   }
 
   onSearch() {
     const keywords = this.searchInput.value.trim();
     if (keywords === '') {
-      this._newsSvc.getNews().subscribe(data => this.news = data);
+      this._newsSvc.getNews().subscribe(data => (this.news = data));
     } else {
       this._newsSvc.searchNews(this.searchInput.value).subscribe(data => {
         this.news = [];

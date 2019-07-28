@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSelect, MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { BaseComponent } from '../base.component';
 import { Sheep } from '../sheep';
 import { SheepService } from '../sheep.service';
@@ -24,7 +26,7 @@ export class SheepDetailComponent extends BaseComponent implements OnInit {
   countries: Array<Array<string>>;
   documents: Array<any>;
 
-  @ViewChild('docToGenerate') docToGenerate: MatSelect;
+  @ViewChild('docToGenerate', { static: false }) docToGenerate: MatSelect;
 
   constructor(private _route: ActivatedRoute,
     private _router: Router,
@@ -32,7 +34,7 @@ export class SheepDetailComponent extends BaseComponent implements OnInit {
     private _dialog: MatDialog,
     private _sheepSvc: SheepService,
     private _h: HelperService,
-    private _observableMedia: ObservableMedia) {
+    private _observableMedia: MediaObserver) {
     super();
     this.createForm();
   }

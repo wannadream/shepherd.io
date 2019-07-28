@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MatTableDataSource } from '@angular/material/table';
+import { MediaObserver } from '@angular/flex-layout';
 import { Sheep } from '../sheep';
 import { BaseComponent } from '../base.component';
 import { SheepService } from '../sheep.service';
@@ -16,7 +16,7 @@ export class SheepComponent extends BaseComponent implements OnInit {
   displayedColumns = ['alienNo', 'name', 'nationality', 'dateOfCustody', 'id'];
 
   constructor(private _sheepSvc: SheepService,
-    private _observableMedia: ObservableMedia) { super(); }
+    private _observableMedia: MediaObserver) { super(); }
 
   ngOnInit() {
     this.baseInit(this._observableMedia);

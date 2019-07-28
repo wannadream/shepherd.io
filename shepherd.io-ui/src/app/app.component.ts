@@ -3,8 +3,8 @@ import {
   Router, RouterEvent, NavigationStart,
   NavigationEnd, NavigationCancel, NavigationError
 } from '@angular/router';
-import { ObservableMedia } from '@angular/flex-layout';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MediaObserver } from '@angular/flex-layout';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { BaseComponent } from './base.component';
@@ -21,7 +21,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   loadingRef: MatDialogRef<LoadingDialogComponent, any>;
 
   constructor(private _router: Router,
-    private _observableMedia: ObservableMedia,
+    private _observableMedia: MediaObserver,
     private _dialog: MatDialog,
     public helper: HelperService) {
     super();
