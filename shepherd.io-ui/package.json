@@ -24,7 +24,7 @@
     "@angular/platform-browser": "8.1.2",
     "@angular/platform-browser-dynamic": "8.1.2",
     "@angular/router": "8.1.2",
-    "acorn": "^6.2.1",
+    "acorn": "^6.4.1",
     "core-js": "^2.5.4",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
