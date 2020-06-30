@@ -13,7 +13,7 @@
         "debug": "~3.1.0",
         "dotenv": "^5.0.1",
         "express": "~4.16.3",
-        "express-jwt": "^5.3.1",
+        "express-jwt": "^6.0.0",
         "jsonwebtoken": "^8.2.0",
         "mongoose": "~5.0.10",
         "morgan": "^1.9.1",
